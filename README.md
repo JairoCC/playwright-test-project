@@ -8,4 +8,4 @@ This is an automation project using [Playwright](https://playwright.dev/) to tes
 
 - End-to-end test automation with Playwright.
 - Tests the Sauce Labs demo page.
-- GitHub Actions configuration to run tests automatically.
+- GitHub Actions configuration to run tests automatically on merge or manually.
