@@ -7,6 +7,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   test:
     timeout-minutes: 60
@@ -48,8 +51,17 @@ jobs:
         name: playwright-report
         path: playwright-report
 
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v1
-      with:
-        branch: gh-pages
-        folder: playwright-report
+    - name: Move report to docs folder
+      run: |
+        mkdir -p docs
+        cp -r playwright-report/* docs/
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "your-email@example.com"
+        git config --global user.name "Your Name"
+        git add docs/
+        git commit -m "Update Playwright report"
+        git push origin ${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
