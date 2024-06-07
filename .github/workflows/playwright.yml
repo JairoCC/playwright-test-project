@@ -53,18 +53,17 @@ jobs:
         name: playwright-report
         path: playwright-report
 
-    - name: Move report to docs folder
+    - name: Deploy to GitHub Pages
       run: |
-        mkdir -p docs
-        cp -r playwright-report/* docs/
 
-    - name: Commit and push changes
-      run: |
         git config --global user.email "your-email@example.com"
         git config --global user.name "Your Name"
+        mkdir -p docs      
+        cp -r playwright-report/* docs/
         git add docs/
         git commit -m "Update Playwright report"
         git push origin ${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
